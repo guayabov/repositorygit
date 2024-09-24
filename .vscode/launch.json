@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PublicspacesproApplication<publicspacespro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.codexsof.publicspacespro.PublicspacesproApplication",
+            "projectName": "publicspacespro",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
