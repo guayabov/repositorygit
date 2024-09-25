@@ -2,37 +2,38 @@ package com.codexsof.controller;
 
 import com.codexsof.model.User;
 import com.codexsof.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
-@RestController
-@RequestMapping("/auth")
+@Controller
 public class AuthController {
 
     @Autowired
     private UserService userService;
 
+    @GetMapping("/register")
+    public String showRegisterForm(Model model) {
+        model.addAttribute("user", new User());
+        return "register"; 
+    }
+
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
         try {
             userService.register(user);
-            return ResponseEntity.ok("Usuario registrado exitosamente");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return "redirect:/login";
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al registrar usuario");
+            model.addAttribute("error", "Error al registrar el usuario: " + e.getMessage());
+            return "register"; 
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
-        User user = userService.login(username, password);
-        if (user != null) {
-            return ResponseEntity.ok("Login exitoso");
-        } else {
-            return ResponseEntity.status(401).body("Login fallido: credenciales incorrectas");
-        }
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login"; 
     }
 }
