@@ -5,25 +5,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 import com.codexsof.repository.*;
-import com.codexsof.model.User;
+import com.codexsof.model.Users;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User register(User user) {
+    public Users register(Users user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword); 
         return userRepository.save(user);
     }
 
-    public User login(String username, String password) {
-        Optional<User> optionalUser = userRepository.findByUsername(username);
+    public Users login(String username, String password) {
+        Optional<Users> optionalUser = userRepository.findByUsername(username);
 
         if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+            Users user = optionalUser.get();
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 

@@ -1,6 +1,6 @@
 package com.codexsof.controller;
 
-import com.codexsof.model.User;
+import com.codexsof.model.Users;
 import com.codexsof.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,12 @@ public class AuthController {
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new Users());
         return "register"; 
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user, Model model) {
+    public String registerUser(@ModelAttribute("user") Users user, Model model) {
         try {
             userService.register(user);
             return "redirect:/login";

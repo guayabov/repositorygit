@@ -4,15 +4,21 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
-    // Getters y Setters
+    public Users() {
+    }
+
+    
     public Long getId() {
         return id;
     }
@@ -37,6 +43,4 @@ public class User {
         this.password = password;
     }
 
-   
 }
-
